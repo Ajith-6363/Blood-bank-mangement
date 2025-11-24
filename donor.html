@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Donor - Blood Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Donor Registration & Donate</h1>
+    <nav><a href="index.html">Home</a></nav>
+  </header>
+
+  <main>
+    <form id="donor-form">
+      <label>Name<input type="text" name="name" required></label>
+      <label>Phone<input type="text" name="phone" required></label>
+      <label>Email<input type="email" name="email"></label>
+      <label>Blood Group
+        <select name="blood_group" required>
+          <option value="">Select</option>
+          <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+          <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+        </select>
+      </label>
+      <label>City<input type="text" name="city"></label>
+      <label>Units to donate<input type="number" name="units" value="1" min="1" required></label>
+      <button type="submit">Register & Donate</button>
+    </form>
+
+    <div id="donor-msg"></div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
