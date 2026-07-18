@@ -126,10 +126,9 @@ def seed_database(db: Session):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Auto-create tables for SQLite, otherwise rely on migrations
-    if settings.DATABASE_URL.startswith("sqlite"):
-        logger.info("Configured for SQLite. Auto-creating database tables...")
-        Base.metadata.create_all(bind=engine)
+    # Auto-create tables for any configured database (including PostgreSQL) on startup
+    logger.info("Ensuring database tables are initialized...")
+    Base.metadata.create_all(bind=engine)
         
     db = SessionLocal()
     try:
