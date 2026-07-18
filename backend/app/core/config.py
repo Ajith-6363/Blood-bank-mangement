@@ -9,10 +9,10 @@ class Settings:
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
 
-    # If on Vercel, default SQLite to writeable /tmp directory to avoid read-only filesystem crash
+    # If on Vercel or inside AWS Lambda/serverless, default SQLite to writeable /tmp directory to avoid read-only filesystem crash
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL", 
-        "sqlite:////tmp/blood_bank.db" if os.getenv("VERCEL") else "sqlite:///./blood_bank.db"
+        "sqlite:////tmp/blood_bank.db" if (os.getenv("VERCEL") or "var/task" in os.path.abspath(__file__)) else "sqlite:///./blood_bank.db"
     )
     
     SECRET_KEY: str = os.getenv(
