@@ -9,7 +9,11 @@ class Settings:
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
 
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./blood_bank.db")
+    # If on Vercel, default SQLite to writeable /tmp directory to avoid read-only filesystem crash
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL", 
+        "sqlite:////tmp/blood_bank.db" if os.getenv("VERCEL") else "sqlite:///./blood_bank.db"
+    )
     
     SECRET_KEY: str = os.getenv(
         "SECRET_KEY", "9a8d7c6b5e4f3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c"
