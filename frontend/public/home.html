@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink - Blood Bank Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #131926;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-red: #e11d48;
+            --accent-red-hover: #f43f5e;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f59e0b;
+            --glass-bg: rgba(19, 25, 38, 0.7);
+            --glass-border: rgba(38, 47, 69, 0.6);
+            --border-radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background-image: radial-gradient(circle at top right, rgba(225, 29, 72, 0.08), transparent 400px);
+        }
+
+        .header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 3rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .highlight {
+            color: var(--accent-red);
+            background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .portal-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .portal-card.donor:hover { border-color: var(--accent-red); }
+        .portal-card.recipient:hover { border-color: var(--accent-purple); }
+        .portal-card.admin:hover { border-color: var(--accent-green); }
+        .portal-card.hospital:hover { border-color: var(--accent-blue); }
+        .portal-card.volunteer:hover { border-color: var(--accent-orange); }
+
+        .portal-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portal-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            min-height: 40px;
+        }
+
+        .btn {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .btn-donor { background-color: var(--accent-red); color: white; }
+        .btn-donor:hover { background-color: var(--accent-red-hover); }
+
+        .btn-recipient { background-color: var(--accent-purple); color: white; }
+        .btn-recipient:hover { background-color: #9d76fa; }
+
+        .btn-admin { background-color: var(--accent-green); color: white; }
+        .btn-admin:hover { background-color: #12d393; }
+
+        .btn-hospital { background-color: var(--accent-blue); color: white; }
+        .btn-hospital:hover { background-color: #5196ff; }
+
+        .btn-volunteer { background-color: var(--accent-orange); color: white; }
+        .btn-volunteer:hover { background-color: #ffb129; }
+
+        /* Bottom Toolbar styles */
+        .bottom-toolbar-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .toolbar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .toolbar-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .toolbar-links {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .toolbar-btn {
+            background-color: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .btn-donor-tb { border-color: var(--accent-red); color: var(--accent-red); }
+        .btn-donor-tb:hover { background-color: rgba(225, 29, 72, 0.1); }
+
+        .btn-recipient-tb { border-color: var(--accent-purple); color: var(--accent-purple); }
+        .btn-recipient-tb:hover { background-color: rgba(139, 92, 246, 0.1); }
+
+        .btn-hospital-tb { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .btn-hospital-tb:hover { background-color: rgba(59, 130, 246, 0.1); }
+
+        .btn-volunteer-tb { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .btn-volunteer-tb:hover { background-color: rgba(245, 158, 11, 0.1); }
+
+        .btn-admin-tb { border-color: var(--accent-green); color: var(--accent-green); }
+        .btn-admin-tb:hover { background-color: rgba(16, 185, 129, 0.1); }
+
+        .footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            background-color: var(--bg-secondary);
+            margin-top: 4rem;
+            width: 100%;
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .portals-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2.25rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/" class="logo">
+            <span class="logo-icon">🩸</span>
+            <span>LifeLink</span>
+        </a>
+        <div class="nav-links">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#portals" class="nav-link">Portals</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Every Drop Saves Lives.<br><span class="highlight">Aesthetic Access Portals</span></h1>
+        <p class="intro">Welcome to the LifeLink central control panel. Select your corresponding login portal below to manage blood drives, track refrigerator stocks, request units, or coordinate volunteer operations.</p>
+
+        <h2 class="section-title" id="portals">Access Dashboards</h2>
+
+        <div class="portals-grid">
+            <div class="portal-card donor">
+                <h3>Donor Portal</h3>
+                <p>Schedule blood donation appointments, check eligibility criteria, and view your certificate history.</p>
+                <a href="/login?role=donor" class="btn btn-donor">Donor Access &rarr;</a>
+            </div>
+
+            <div class="portal-card recipient">
+                <h3>Recipient Portal</h3>
+                <p>Register emergency blood request tickets and check real-time compatibility statuses.</p>
+                <a href="/login?role=recipient" class="btn btn-recipient">Recipient Access &rarr;</a>
+            </div>
+
+            <div class="portal-card hospital">
+                <h3>Hospital Operations</h3>
+                <p>Submit bulk blood unit requests, review refrigerator stocks, and manage dispatch transit logs.</p>
+                <a href="/login?role=hospital" class="btn btn-hospital">Hospital Access &rarr;</a>
+            </div>
+
+            <div class="portal-card volunteer">
+                <h3>Volunteer Center</h3>
+                <p>Check in incoming donors, screen bio-metrics, and coordinate blood drive logistics.</p>
+                <a href="/login?role=volunteer" class="btn btn-volunteer">Volunteer Access &rarr;</a>
+            </div>
+
+            <div class="portal-card admin">
+                <h3>Central Administration</h3>
+                <p>Oversee users, verify organizations, view detailed audit logs, and consult the AI chatbot assistant.</p>
+                <a href="/login?role=admin" class="btn btn-admin">Admin Access &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Quick Access Switcher Card inside Container -->
+        <div class="bottom-toolbar-card">
+            <h4 class="toolbar-title">Quick Portal Authentication</h4>
+            <p class="toolbar-subtitle">Select a role below to log in directly into your interface dashboard</p>
+            <div class="toolbar-links">
+                <a href="/login?role=donor" class="toolbar-btn btn-donor-tb">Donor Login</a>
+                <a href="/login?role=recipient" class="toolbar-btn btn-recipient-tb">Recipient Login</a>
+                <a href="/login?role=hospital" class="toolbar-btn btn-hospital-tb">Hospital Login</a>
+                <a href="/login?role=volunteer" class="toolbar-btn btn-volunteer-tb">Volunteer Login</a>
+                <a href="/login?role=admin" class="toolbar-btn btn-admin-tb">Admin Login</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" id="contact">
+        <p>© 2026 LifeLink Blood Bank Management System. All rights reserved.</p>
+        <p class="footer-note">Contact us at support@lifelink.org | Real-Time Refrigerator Cold Chain Monitoring</p>
+    </footer>
+</body>
+</html>
