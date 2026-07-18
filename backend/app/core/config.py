@@ -34,3 +34,8 @@ class Settings:
     SMTP_FROM: str = os.getenv("SMTP_FROM", "noreply@bloodbank.com")
 
 settings = Settings()
+
+# Post-processing: Ensure SQLite database path uses /tmp/ in serverless Vercel environments
+# to bypass local .env files overriding DATABASE_URL to a read-only path
+if (os.getenv("VERCEL") or "var/task" in os.path.abspath(__file__)) and settings.DATABASE_URL.startswith("sqlite:///."):
+    settings.DATABASE_URL = settings.DATABASE_URL.replace("sqlite:///.", "sqlite:////tmp")
