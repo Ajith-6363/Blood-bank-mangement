@@ -136,17 +136,24 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
         
-    # Start background scheduler loop
-    scheduler_task = asyncio.create_task(start_periodic_scheduler())
+    # Start background scheduler loop only if not in serverless environment
+    import os
+    scheduler_task = None
+    if not os.getenv("VERCEL"):
+        logger.info("Starting background periodic scheduler...")
+        scheduler_task = asyncio.create_task(start_periodic_scheduler())
+    else:
+        logger.info("Running in Vercel serverless mode. Persistent background scheduler disabled.")
     
     yield
     
     # Cancel background task on shutdown
-    scheduler_task.cancel()
-    try:
-        await scheduler_task
-    except asyncio.CancelledError:
-        logger.info("Background scheduler shut down successfully.")
+    if scheduler_task:
+        scheduler_task.cancel()
+        try:
+            await scheduler_task
+        except asyncio.CancelledError:
+            logger.info("Background scheduler shut down successfully.")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
